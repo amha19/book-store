@@ -1,22 +1,26 @@
-module.exports = (sequelize, DataTypes) => {
-    const Author = sequelize.define(
-        'Author',
-        {
-            id: {
-                type: DataTypes.INTEGER,
-                autoIncrement: true,
-                allowNull: false,
-                primaryKey: true,
-            },
-            name: {
-                type: DataTypes.STRING,
-                allowNull: false,
-            },
-        },
-        {
-            tableName: 'author',
-        }
-    );
+const { Sequelize, sequelize } = require('../service/db');
 
-    return Author;
-};
+const Author = sequelize.define(
+    'Author',
+    {
+        id: {
+            type: Sequelize.INTEGER,
+            autoIncrement: true,
+            allowNull: false,
+            primaryKey: true,
+        },
+        name: {
+            type: Sequelize.STRING,
+            allowNull: false,
+        },
+    },
+    {
+        createdAt: 'created_at',
+        updatedAt: 'updated_at',
+        deletedAt: 'deleted_at',
+        underscored: true,
+        tableName: 'author',
+    }
+);
+
+module.exports = Author;

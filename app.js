@@ -2,11 +2,31 @@ const express = require('express');
 const morgan = require('morgan');
 const homeRoutes = require('./routes/index');
 const bookRoutes = require('./routes/book');
-const db = require('./models');
+const { sequelize } = require('./service/db');
+const Book = require('./models/book');
+const Author = require('./models/author');
+const Book_category = require('./models/book-category');
+const Category = require('./models/category');
+const Publisher = require('./models/publisher');
 
 const app = express();
 
-db();
+// associations
+
+Author.hasMany(Book, {
+    onDelete: 'cascade',
+});
+Book.belongsTo(Author);
+
+Publisher.hasMany(Book, {
+    onDelete: 'cascade',
+});
+Book.belongsTo(Publisher);
+
+Book.belongsToMany(Category, { through: Book_category });
+Category.belongsToMany(Book, { through: Book_category });
+
+sequelize.sync(); //{ force: true }
 
 // middlewares
 app.use(morgan('dev'));
