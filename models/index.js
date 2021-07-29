@@ -10,7 +10,7 @@ module.exports = () => {
         sequelize,
         Sequelize.DataTypes
     );
-    const BookCategory = require(__dirname + '/bookCategory')(
+    const Book_Category = require(__dirname + '/book-category')(
         sequelize,
         Sequelize.DataTypes
     );
@@ -19,22 +19,7 @@ module.exports = () => {
         Sequelize.DataTypes
     );
 
-    /*
-     *
-     * TODO add any additional models here.
-     *
-     */
-
-    // global.db.Install.belongsTo(global.db.Campaign, {
-    //     onDelete: 'cascade',
-    //     foreignKey: 'campaign_id',
-    // });
-
-    /*
-     *
-     * TODO add any additional relationships between models here.
-     *
-     */
+    // associations
 
     Author.hasMany(Book, {
         onDelete: 'cascade',
@@ -46,8 +31,8 @@ module.exports = () => {
     });
     Book.belongsTo(Publisher);
 
-    Book.belongsToMany(Category, { through: BookCategory });
-    Category.belongsToMany(Book, { through: BookCategory });
+    Book.belongsToMany(Category, { through: Book_Category });
+    Category.belongsToMany(Book, { through: Book_Category });
 
     sequelize.sync({ force: true }); //
 };
