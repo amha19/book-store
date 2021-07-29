@@ -2,11 +2,11 @@ const express = require('express');
 const morgan = require('morgan');
 const homeRoutes = require('./routes/index');
 const bookRoutes = require('./routes/book');
-const sequelize = require('./service/db');
-
-// db();
+const db = require('./models');
 
 const app = express();
+
+db();
 
 // middlewares
 app.use(morgan('dev'));
@@ -35,10 +35,4 @@ const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, async () => {
     console.log(`server is running on port ${PORT}`);
-    try {
-        await sequelize.authenticate();
-        console.log('Connection has been established successfully.');
-    } catch (error) {
-        console.error('Unable to connect to the database:', error);
-    }
 });

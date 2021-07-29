@@ -6,4 +6,4 @@ const sequelize = new Sequelize('bookstore', 'postgres', 'amhas.4242', {
     port: 5432,
 });
 
-module.exports = sequelize;
+module.exports = { Sequelize, sequelize };

@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
             },
         },
         {
-            tabelName: 'bookCategory',
+            tableName: 'book_category',
         }
     );
 
