@@ -1,6 +1,7 @@
 const express = require('express');
 const Author = require('../models/author');
 const Book = require('../models/book');
+const BookCategroy = require('../models/book-category');
 const Publisher = require('../models/publisher');
 const router = express.Router();
 
@@ -37,9 +38,36 @@ router.get('/:bookId', async (req, res) => {
 
 // POST create a book
 router.post('/', async (req, res) => {
-    const { title, publicationDate, author, publisher } = req.body;
+    const { title, PublicationYear, author, publisher, category } = req.body;
 
-    res.send('ok');
+    try {
+        const result = await Book.create({
+            title,
+            PublicationYear,
+        });
+
+        res.json({
+            message: 'Book created',
+            book: result,
+        });
+    } catch (err) {
+        console.log(err.message);
+    }
+});
+
+// DELETE remove a book
+router.delete('/:bookId', async (req, res) => {
+    const { bookId } = req.params;
+
+    try {
+        const book = await Book.findByPk(bookId);
+        await book.destroy();
+        res.json({
+            message: 'Book removed',
+        });
+    } catch (err) {
+        console.log(err.message);
+    }
 });
 
 module.exports = router;
